@@ -97,6 +97,7 @@ const Login = (props: IProps) => {
           <Form.Item
             name="agreement"
             valuePropName="checked"
+            wrapperCol={{ offset: 3, span: 16 }}
             rules={[
               {
                 validator: (_, value) =>
