@@ -1,0 +1,16 @@
+.container {
+  margin-top: 28px;
+
+  .title {
+    font-size:24px;
+    font-weight: 600px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  :global {
+    .ant-btn-primary {
+      width: 310px;
+    }
+  }
+}
