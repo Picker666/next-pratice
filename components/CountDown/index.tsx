@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { Button } from 'antd';
+import { Button, FormInstance, message } from 'antd';
+import request from 'service/fetch'
 
 const TIMEOUT_LIMITATION = 60;
 
-const CountDown = () => {
+const CountDown = (props: {form: FormInstance}) => {
   const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
   const [restTime, setRestTime] = useState(TIMEOUT_LIMITATION);
   const timeoutRef = useRef<null|NodeJS.Timeout>(null);
@@ -27,11 +28,18 @@ const CountDown = () => {
   }, [restTime, isShowVerifyCode]);
 
   const handleSendVerifyCode = () => {
+    const phone = props.form.getFieldValue('phone');
+    if (!phone) {
+      message.error('请输入手机号。。。');
+
+      return;
+    }
+    request.post('/api/user/sendVerifyCode');
     setIsShowVerifyCode(true);
   };
 
   return isShowVerifyCode ? (
-    <Button type='text'>{restTime} 秒</Button>
+    <Button type='text'>{restTime} 秒后发送</Button>
     ) : (
     <Button onClick={handleSendVerifyCode}>获取验证码</Button>
   );

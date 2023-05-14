@@ -1,4 +1,4 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'Next';
 import { useState } from 'react';
 import { Modal, Form, Input, Button, Row, Col, Checkbox } from 'antd';
 
@@ -11,14 +11,12 @@ interface IProps {
   onClose: () => void;
 }
 
-const Login = (props: IProps) => {
-  const { isShow = false, onClose } = props;
-  const [verifyCode, setVerifyCode] = useState('');
+const Login = (props: Pick<IProps, 'onClose'>) => {
+  const { onClose } = props;
 
   const [form] = Form.useForm();
 
   const handleGithubLogin = () => {};
-  const handleSendVerifyCode = () => {};
 
   const onFinish = (values: { [key: string]: string }) => {
     console.log('values: ', values);
@@ -26,7 +24,7 @@ const Login = (props: IProps) => {
 
   return (
     <Modal
-      visible={isShow}
+      visible={true}
       onCancel={onClose}
       footer={false}
       centered
@@ -42,7 +40,7 @@ const Login = (props: IProps) => {
           wrapperCol={{ span: 14 }}
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          autoComplete="off"
+          autoComplete="on"
         >
           <Form.Item
             label="手机号"
@@ -65,7 +63,7 @@ const Login = (props: IProps) => {
                     { required: true, message: '请输入验证码。。。' },
                     ({ getFieldValue }) => ({
                       validator(_, value) {
-                        if (!value || verifyCode === value) {
+                        if (!value) {
                           return Promise.resolve();
                         }
                         if (value.length >= 6) {
@@ -81,7 +79,7 @@ const Login = (props: IProps) => {
                 </Form.Item>
               </Col>
               <Col span={9}>
-                <CountDown />
+                <CountDown form={form} />
                 {/* <Button onClick={handleSendVerifyCode}>获取验证码</Button> */}
               </Col>
             </Row>
@@ -120,4 +118,12 @@ const Login = (props: IProps) => {
   );
 };
 
-export default Login;
+export default (props: IProps)=>{
+  const { isShow, onClose } = props;
+
+  if (isShow) {
+    return  <Login onClose={onClose} />;
+  }
+  return null;
+
+};
