@@ -2,6 +2,8 @@ import type { NextPage } from 'next';
 import { useState } from 'react';
 import { Modal, Form, Input, Button, Row, Col, Checkbox } from 'antd';
 
+import CountDown from 'components/CountDown';
+
 import styles from './index.module.scss';
 
 interface IProps {
@@ -79,7 +81,8 @@ const Login = (props: IProps) => {
                 </Form.Item>
               </Col>
               <Col span={9}>
-                <Button onClick={handleSendVerifyCode}>获取验证码</Button>
+                <CountDown />
+                {/* <Button onClick={handleSendVerifyCode}>获取验证码</Button> */}
               </Col>
             </Row>
           </Form.Item>
