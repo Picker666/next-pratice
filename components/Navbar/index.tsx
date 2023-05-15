@@ -36,7 +36,12 @@ const Navbar: NextPage = () => {
   };
 
    const handleGotoPersonalPage = () => {
-     push(`/user/${userId}`);
+    if (userId) {
+      push(`/user/${userId}`);
+    } else {
+      message.warning('请先登录');
+    }
+
    };
 
   const handleLogout = () => {
