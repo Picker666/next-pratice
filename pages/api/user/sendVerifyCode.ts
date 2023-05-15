@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { withIronSessionApiRoute } from 'iron-session/next'
+import { withIronSessionApiRoute } from 'iron-session/next';
 import { format } from 'date-fns';
 import md5 from 'md5';
 import { encode } from 'js-base64';
@@ -42,12 +42,10 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
     }
     );
 
-  console.log('response: ', response);
-
   const { statusCode, statusMsg, templateSMS } = response as unknown as {statusCode: string, statusMsg: string; templateSMS: {}};
 
   if (statusCode === '000000')  {
-    session.verifyCode = verifyCode;
+    session[to] = verifyCode;
     await session.save();
 
     res.status(200).json({
