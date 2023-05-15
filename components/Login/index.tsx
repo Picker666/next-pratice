@@ -1,7 +1,7 @@
 import type { NextPage } from 'Next';
 import { useEffect } from 'react';
 import { Modal, Form, Input, Button, Row, Col, Checkbox, message } from 'antd';
-import { useCookie } from 'next-cookie';
+import { useCookie, withCookie } from 'next-cookie';
 
 import CountDown from 'components/CountDown';
 
@@ -13,12 +13,16 @@ import styles from './index.module.scss';
 interface IProps {
   isShow: boolean;
   onClose: () => void;
-  cookies: any;
+  cookie: any;
 }
 
-const Login = (props: Pick<IProps, 'onClose' | 'cookies'>) => {
-  const { onClose, cookies } = props;
-  const cookie = useCookie(cookies);
+/**
+ * 获取cookie的方式，通过 withCookie 或者 getInitialProps + useCookie(cookies) 都可以，
+ */
+
+const Login = withCookie((props: Pick<IProps, 'onClose' | 'cookie'>) => {
+  const { onClose, cookie } = props;
+  // const cookie = useCookie(cookies);
   const store = useStore();
 
   const [form] = Form.useForm();
@@ -28,7 +32,6 @@ const Login = (props: Pick<IProps, 'onClose' | 'cookies'>) => {
   useEffect(() => {
     form.setFieldsValue({
       phone: '17621059030',
-      verifyCode: '6666',
       agreement: true,
     });
   }, []);
@@ -143,18 +146,18 @@ const Login = (props: Pick<IProps, 'onClose' | 'cookies'>) => {
       </div>
     </Modal>
   );
-};
+});
 
-Login.getInitialProps = async ({ ctx }: any) => {
-  const { userId, nickname, avatar } = ctx?.req.cookies || {};
-  console.log('ctx?.req.cookie: ', ctx?.req.cookies);
+// Login.getInitialProps = async ({ ctx }: any) => {
+//   const { userId, nickname, avatar } = ctx?.req.cookies || {};
+//   console.log('ctx?.req.cookie: ', ctx?.req.cookies);
 
-  return {
-    props: {
-      cookies: ctx?.req.cookies,
-    },
-  };
-};
+//   return {
+//     props: {
+//       cookies: ctx?.req.cookies,
+//     },
+//   };
+// };
 
 export default (props: IProps)=>{
   const { isShow, onClose } = props;

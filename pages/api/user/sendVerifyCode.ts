@@ -44,7 +44,7 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
 
   const { statusCode, statusMsg, templateSMS } = response as unknown as {statusCode: string, statusMsg: string; templateSMS: {}};
 
-  if (statusCode === '000000')  {
+  if (statusCode === '000000') {
     session[to] = verifyCode;
     await session.save();
 
