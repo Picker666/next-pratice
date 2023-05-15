@@ -8,9 +8,13 @@ import { User, UserAuth } from 'db/entity';
 
 import { ISession } from 'pages/api/index';
 
+import { Cookie } from 'next-cookie';
+import { setCookie } from 'utils';
+
 async function login(req: NextApiRequest, res: NextApiResponse) {
   const { phone, verifyCode, identity_type } = req.body;
   const session: ISession = req.session;
+  const cookies = Cookie.fromApiRoute(req, res);
   console.log('session: ', session);
 
   console.log('phone, verifyCode: ', phone, verifyCode);
@@ -19,9 +23,6 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
   const userAuthRepo = db.getRepository(UserAuth);
 
   const responseData = {code: 0};
-
-  console.log('session: ', session);
-
 
   if (String(session[phone]) === String(verifyCode)) {
     let userAuth = await userAuthRepo.findOne(
@@ -38,9 +39,9 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
 
       console.log('session: ', session);
 
-      session[phone] = undefined;
-      session.save();
-      console.log('session: ', session);
+      // session[phone] = undefined;
+      await session.save();
+      setCookie(cookies, {userId: id, nickname, avatar});
 
       responseData.msg = '登录成功。。。';
     } else {
@@ -64,7 +65,8 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
       session.nickname = nickname;
       session.avatar = avatar;
       session.id = id;
-      session.save();
+      await session.save();
+      setCookie(cookies, { userId: id, nickname, avatar });
 
       responseData.msg = '已为你创建新用户，并登录成功。。。';
     }

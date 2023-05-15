@@ -1,20 +1,25 @@
 import type { NextPage } from 'Next';
 import { useEffect } from 'react';
 import { Modal, Form, Input, Button, Row, Col, Checkbox, message } from 'antd';
+import { useCookie } from 'next-cookie';
 
 import CountDown from 'components/CountDown';
 
 import request from 'service/fetch'
+import { useStore } from 'store/index';
 
 import styles from './index.module.scss';
 
 interface IProps {
   isShow: boolean;
   onClose: () => void;
+  cookies: any;
 }
 
-const Login = (props: Pick<IProps, 'onClose'>) => {
-  const { onClose } = props;
+const Login = (props: Pick<IProps, 'onClose' | 'cookies'>) => {
+  const { onClose, cookies } = props;
+  const cookie = useCookie(cookies);
+  const store = useStore();
 
   const [form] = Form.useForm();
 
@@ -26,7 +31,7 @@ const Login = (props: Pick<IProps, 'onClose'>) => {
       verifyCode: '6666',
       agreement: true,
     });
-  }, [])
+  }, []);
 
   const onFinish = (values: { [key: string]: string }) => {
     console.log('values: ', values);
@@ -35,6 +40,11 @@ const Login = (props: Pick<IProps, 'onClose'>) => {
       .post('/api/user/login', { phone, verifyCode, identity_type: 'phone' })
       .then((response) => {
         if (response?.code === 0) {
+          store.user.setUserInfo({
+            userId: cookie.get('userId'),
+            nickname: cookie.get('nickname'),
+            avatar: cookie.get('avatar'),
+          });
           onClose();
         } else {
           message.error(response?.msg || '登录失败');
@@ -70,9 +80,7 @@ const Login = (props: Pick<IProps, 'onClose'>) => {
             <Input placeholder="请输入手机号" />
           </Form.Item>
 
-          <Form.Item
-            label="验证码"
-          >
+          <Form.Item label="验证码">
             <Row gutter={8}>
               <Col span={14}>
                 <Form.Item
@@ -135,6 +143,17 @@ const Login = (props: Pick<IProps, 'onClose'>) => {
       </div>
     </Modal>
   );
+};
+
+Login.getInitialProps = async ({ ctx }: any) => {
+  const { userId, nickname, avatar } = ctx?.req.cookies || {};
+  console.log('ctx?.req.cookie: ', ctx?.req.cookies);
+
+  return {
+    props: {
+      cookies: ctx?.req.cookies,
+    },
+  };
 };
 
 export default (props: IProps)=>{
