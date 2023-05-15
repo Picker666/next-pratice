@@ -5,7 +5,7 @@ import { User } from './user';
 @Entity({ name: 'user_auths' })
 export class UserAuth extends BaseEntity {
   @PrimaryGeneratedColumn()
-  readonly id: string;
+  readonly id!: string;
 
   @Column()
   identity_type!: string;

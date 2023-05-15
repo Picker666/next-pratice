@@ -9,11 +9,22 @@ interface IProps extends AppProps {
 };
 
 function MyApp({ initialValue, Component, pageProps }: IProps) {
+  const renderComponent = (
+    Component: any,
+    pageProps: AppProps['pageProps']) => {
+    if (Component?.layout === null) {
+      return <Component {...pageProps} />;
+    } else {
+      return (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      );
+    }
+  };
   return (
     <StoreProvider initialValue={initialValue}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {renderComponent(Component, pageProps)}
     </StoreProvider>
   );
 }
