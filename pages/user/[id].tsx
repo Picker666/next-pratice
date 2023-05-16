@@ -13,7 +13,7 @@ export async function getServerSideProps () {
   const articles = await db.getRepository(Articles).find({relations: ['user']});
 
   return {
-    props: {articles: JSON.parse(JSON.stringify(articles))}
+    props: {articles: JSON.parse(JSON.stringify(articles.reverse()))}
   }
 }
 

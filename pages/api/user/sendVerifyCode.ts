@@ -27,37 +27,46 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const verifyCode = String(Math.floor(Math.random()*9000) + 1000);
   const expireDate = 5;
 
-  const response = await request.post(
-    url,
-    {
-      to,
-      templateId,
-      appId: AppId,
-      datas: [verifyCode, expireDate],
-    },
-    {
-      headers: {
-        Authorization,
+  try {
+
+    const response = await request.post(
+      url,
+      {
+        to,
+        templateId,
+        appId: AppId,
+        datas: [verifyCode, expireDate],
       },
+      {
+        headers: {
+          Authorization,
+        },
+      }
+      );
+  
+    console.log('response: ', response);
+    const { statusCode, statusMsg, templateSMS } = response as unknown as {statusCode: string, statusMsg: string; templateSMS: {}};
+  
+    if (statusCode === '000000') {
+      session[to] = verifyCode;
+      await session.save();
+  
+      res.status(200).json({
+        code: 0,
+        msg: statusMsg,
+        data: templateSMS
+      });
+    } else {
+      res.status(200).json({
+        code: statusCode,
+        msg: statusMsg,
+      });
     }
-    );
-
-  const { statusCode, statusMsg, templateSMS } = response as unknown as {statusCode: string, statusMsg: string; templateSMS: {}};
-
-  if (statusCode === '000000') {
-    session[to] = verifyCode;
-    await session.save();
-
+  } catch (err) {
     res.status(200).json({
-      code: 0,
-      msg: statusMsg,
-      data: templateSMS
-    });
-  } else {
-    res.status(200).json({
-      code: statusCode,
-      msg: statusMsg,
-    });
+      code: -1,
+      msg: '网络异常。。。',
+    });;
   }
 }
 

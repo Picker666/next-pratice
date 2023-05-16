@@ -7,10 +7,9 @@
   justify-content: space-between;
   padding: 20px;
   cursor: pointer;
-
-  &:nth-last-of-type(2n) {
+  
+  &:nth-of-type(4n+1) {
     background-color: aliceblue;
-
   }
 
   .article {
