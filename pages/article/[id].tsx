@@ -17,6 +17,10 @@ export async function getServerSideProps (context: {params: any}) {
   const article = await db.getRepository(Articles).findOne({id: context.params.id},{relations: ['user']});
   // const article = await db.getRepository(Articles).findOne({where: {id: context.params.id},relations: ['user']});
   console.log('article: ', article);
+  if (article) {
+    article.views = article.views + 1;
+    await article.save();
+  }
 
   return {
     props: {article: JSON.parse(JSON.stringify(article))}

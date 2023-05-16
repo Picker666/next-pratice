@@ -1,11 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { withIronSessionApiRoute } from 'iron-session/next';
-import { Cookie } from 'next-cookie';
 
 import { ironOptions } from 'config/index';
 import prepareConnection from 'db/index';
 import { Articles } from 'db/entity';
 import { ISession } from 'pages/api/index';
+
+import {  EXCEPTION_ARTICLE } from '../config/codes';
 
 const publish = async (req: NextApiRequest, res: NextApiResponse) => {
   const session: ISession = req.session;
@@ -20,17 +21,15 @@ const publish = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 	console.log('article: ', article);
 
-  let responseData = { code: 0, msg: '发布成功'}
+  let responseData = { code: 0, msg: '更新文章成功'}
 	console.log('session: ', session);
   if (article && article.user.id === session.id) {
 		article.content = content;
 		article.title = title;
-		const response = await article.save();
-		console.log('response: ', response);
-    responseData.msg = '更新文章成功...';
+    article.update_time = new Date();
+		await article.save();
   } else {
-    responseData.code = -1;
-    responseData.msg = '用户不存在';
+    responseData = EXCEPTION_ARTICLE.UPDATE_FAILED;
   }
 
 
