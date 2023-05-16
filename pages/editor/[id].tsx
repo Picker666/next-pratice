@@ -1,5 +1,3 @@
-
-
 import type { NextPage } from "next";
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
@@ -31,12 +29,11 @@ export async function getServerSideProps (context: {params: any}) {
 }
 
 const NewEditor = (props: {article: IArticle}) => {
-	console.log('props: ', props);
   const store = useStore();
   const { push, back } = useRouter();
   const { userId } = store.user.userInfo;
 
-  const { title: articleTitle, content: articleContent } = props.article;
+  const { id, title: articleTitle, content: articleContent } = props.article;
 
   const [title, setTitle] = useState(articleTitle);
   const [content, setContent] = useState(articleContent);
@@ -57,7 +54,8 @@ const NewEditor = (props: {article: IArticle}) => {
       return;
     }
     request
-      .post('/api/article/publish', {
+      .post('/api/article/update', {
+				id,
         title,
         content,
         tagIds,
