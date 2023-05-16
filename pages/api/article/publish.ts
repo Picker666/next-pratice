@@ -8,6 +8,8 @@ import { User, Articles } from 'db/entity';
 import { ISession } from 'pages/api/index';
 import { setCookie } from 'utils';
 
+import {  EXCEPTION_ARTICLE } from '../config/codes';
+
 const publish = async (req: NextApiRequest, res: NextApiResponse) => {
   const session: ISession = req.session;
   console.log('session: ', session);
@@ -25,7 +27,7 @@ const publish = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await userRepo.findOne({id: session.id});
   console.log('user: ', user);
 
-  let responseData = { code: 0, msg: ''}
+  let responseData = { code: 0, msg: '发布成功'}
   if (article) {
     // TODO:
     responseData.msg = '更新文章成功...';
@@ -37,8 +39,12 @@ const publish = async (req: NextApiRequest, res: NextApiResponse) => {
     newArticle.update_time = newArticle.create_time;
     newArticle.user = user;
 
-    await articleRepo.save(newArticle);
-    responseData.msg = '发布文章成功...';
+    console.log('newArticle: ', newArticle);
+    const response = await articleRepo.save(newArticle);
+    console.log('response: ', response);
+    if (!response) {
+      responseData = EXCEPTION_ARTICLE.PUBLISH_FAILED;
+    }
   } else {
     responseData.code = -1;
     responseData.msg = '用户不存在';

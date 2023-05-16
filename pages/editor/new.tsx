@@ -14,7 +14,7 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 const NewEditor = () => {
   const store = useStore();
-  const { push } = useRouter();
+  const { push, back } = useRouter();
   const { userId } = store.user.userInfo;
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -50,6 +50,10 @@ const NewEditor = () => {
       });
   };
 
+  const handleBack = () => {
+    back();
+  };
+
   const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event?.target?.value);
   };
@@ -65,6 +69,13 @@ const NewEditor = () => {
   return (
     <div className={styles.container}>
       <div className={styles.operation}>
+        <Button
+          ghost
+          type="primary"
+          onClick={handleBack}
+        >
+          后退
+        </Button>
         <Input
           className={styles.title}
           placeholder="请输入文章标题"
@@ -85,7 +96,6 @@ const NewEditor = () => {
           ))}
         </Select>
         <Button
-          className={styles.button}
           type="primary"
           onClick={handlePublish}
         >
