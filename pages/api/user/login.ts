@@ -29,8 +29,6 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
   const session: ISession = req.session;
   const cookies = Cookie.fromApiRoute(req, res);
 
-  console.log('session: ', session);
-
   const db = await prepareConnection();
 
   const userAuthRepo = db.getRepository(UserAuth);

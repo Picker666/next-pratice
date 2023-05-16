@@ -37,7 +37,6 @@ const Login = withCookie((props: Pick<IProps, 'onClose' | 'cookie'>) => {
   }, []);
 
   const onFinish = (values: { [key: string]: string }) => {
-    console.log('values: ', values);
     const { phone, verifyCode } = values;
     request
       .post('/api/user/login', { phone, verifyCode, identity_type: 'phone' })
@@ -150,7 +149,6 @@ const Login = withCookie((props: Pick<IProps, 'onClose' | 'cookie'>) => {
 
 // Login.getInitialProps = async ({ ctx }: any) => {
 //   const { userId, nickname, avatar } = ctx?.req.cookies || {};
-//   console.log('ctx?.req.cookie: ', ctx?.req.cookies);
 
 //   return {
 //     props: {

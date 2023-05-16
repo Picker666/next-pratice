@@ -19,7 +19,6 @@ export async function getServerSideProps () {
 
 const UserHomePage = (props: IArticles) => {
   const {articles} = props;
-  console.log('articles: ', articles);
 
   return (
     <div className="content-layout">

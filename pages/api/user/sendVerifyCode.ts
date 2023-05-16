@@ -20,9 +20,6 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const SigParameter = md5(`${AccountId}${AuthToken}${nowDate}`);
   const Authorization = encode(`${AccountId}:${nowDate}`);
 
-  console.log('SigParameter: ', SigParameter);
-  console.log('Authorization: ', Authorization);
-
   const url = `https://app.cloopen.com:8883/2013-12-26/Accounts/${AccountId}/SMS/TemplateSMS?sig=${SigParameter}`;
   const verifyCode = String(Math.floor(Math.random()*9000) + 1000);
   const expireDate = 5;

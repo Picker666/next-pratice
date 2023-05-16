@@ -12,7 +12,6 @@ import {  EXCEPTION_ARTICLE } from '../config/codes';
 
 const publish = async (req: NextApiRequest, res: NextApiResponse) => {
   const session: ISession = req.session;
-  console.log('session: ', session);
   const { title, content, id } = req.body;
 
   const db = await prepareConnection();
@@ -25,7 +24,6 @@ const publish = async (req: NextApiRequest, res: NextApiResponse) => {
     article = await articleRepo.findOne({id});
   }
   const user = await userRepo.findOne({id: session.id});
-  console.log('user: ', user);
 
   let responseData = { code: 0, msg: '发布成功'}
   if (article) {
@@ -39,9 +37,7 @@ const publish = async (req: NextApiRequest, res: NextApiResponse) => {
     newArticle.update_time = newArticle.create_time;
     newArticle.user = user;
 
-    console.log('newArticle: ', newArticle);
     const response = await articleRepo.save(newArticle);
-    console.log('response: ', response);
     if (!response) {
       responseData = EXCEPTION_ARTICLE.PUBLISH_FAILED;
     }
