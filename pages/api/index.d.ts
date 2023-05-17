@@ -18,6 +18,7 @@ export type IArticle = {
   is_delete: boolean,
   views: number,
   user: IUser,
+  comments: IComment[]
 };
 
 export type IComment = {

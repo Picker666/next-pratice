@@ -16,15 +16,14 @@ export class Comments extends BaseEntity {
   @Column()
   update_time!: Date;
 
-  @ManyToOne(()=> User, {
-    cascade: true
-  })
+  @ManyToOne(()=> User)
   @JoinColumn({name: 'user_id'})
   user!: User
 
-  @ManyToOne(()=> User, {
-    cascade: true
-  })
+  @ManyToOne(()=> Articles)
   @JoinColumn({name: 'article_id'})
-  article!: User
+  article!: Articles
+
+  @Column()
+  article_id!: number;
 }

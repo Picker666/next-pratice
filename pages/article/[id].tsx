@@ -6,38 +6,48 @@ import { useStore } from 'store/index';
 import MarkDown from 'markdown-to-jsx';
 import { format } from 'date-fns';
 import prepareConnection from 'db/index';
-import { Articles } from 'db/entity';
-import { IArticle } from 'pages/api';
+import { Articles, Comments } from 'db/entity';
+import { IArticle, IComment } from 'pages/api';
 import request from 'service/fetch';
 
 import styles from './index.module.scss';
 
 export async function getServerSideProps (context: {params: any}) {
   const db = await prepareConnection();
-  const article = await db.getRepository(Articles).findOne({id: context.params.id},{relations: ['user']});
+  const article = await db.getRepository(Articles).findOne({id: context.params.id},{relations: ['user', 'comments', 'comments.user']});
   // const article = await db.getRepository(Articles).findOne({where: {id: context.params.id},relations: ['user']});
-  console.log('article: ', article);
   if (article) {
     article.views = article.views + 1;
     await article.save();
   }
 
   return {
-    props: {article: JSON.parse(JSON.stringify(article))}
+    props: {
+      article: JSON.parse(JSON.stringify(article)),
+    }
   }
 }
 
 const ArticleDetail = (props: {article: IArticle}) => {
-  const { id: articleId, title, content, update_time, views, user: { id, nickname, avatar }} = props.article;
+  const { id: articleId, title, content, update_time, views, user: { id, nickname, avatar }, comments: originalComments } = props.article;
   const store = useStore();
   const loginUserInfo = store?.user?.userInfo;
   const [inputVal, setInputVal] = useState('');
-  // const [comments, setComments] = useState(comments || []);
+  const [comments, setComments] = useState(originalComments || []);
+
+  const updateComments = async () => {
+    const res = await request.post('/api/comment/query', {articleId});
+    if (res.code === 0) {
+      setComments(res.data);
+    }
+  }
 
   const handleComment = async () => {
     const res = await request.post('/api/comment/add', {articleId, content: inputVal})
     if (res.code === 0) {
-      message.info(res.msg || '成功。。。')
+      message.info(res.msg || '成功。。。');
+      setInputVal('');
+      updateComments();
     }
   }
 
@@ -83,7 +93,7 @@ const ArticleDetail = (props: {article: IArticle}) => {
             </div>
           )}
           <Divider />
-          {/* <div className={styles.display}>
+          <div className={styles.display}>
             {comments?.map((comment: any) => (
               <div className={styles.wrapper} key={comment?.id}>
                 <Avatar src={comment?.user?.avatar} size={40} />
@@ -101,7 +111,7 @@ const ArticleDetail = (props: {article: IArticle}) => {
                 </div>
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

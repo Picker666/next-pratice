@@ -13,8 +13,10 @@ const query = async (req: NextApiRequest, res: NextApiResponse) => {
 	const article = await articlesRepo.findOne({id: articleId})
 	let responseData: IResponse<IComment[]> = {code: 0, msg: '查询成功。。。'};
 	if (article) {
+		console.log('article: ', article);
 		const commentsRepo = db.getRepository(Comments);
-		const comments = await commentsRepo.find({relations: ['user']});
+		const comments = await commentsRepo.find({where: { ['article_id']: articleId }, relations: ['user']});
+		console.log('comments: ', comments);
 		if (comments) {
 			responseData.data = comments;
 		} else {
