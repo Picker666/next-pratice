@@ -56,7 +56,7 @@ const Login = withCookie((props: Pick<IProps, 'onClose' | 'cookie'>) => {
 
   return (
     <Modal
-      visible={true}
+      open={true}
       onCancel={onClose}
       footer={false}
       centered

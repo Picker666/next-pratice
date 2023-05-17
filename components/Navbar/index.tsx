@@ -48,24 +48,32 @@ const Navbar: NextPage = () => {
     request.post('/api/user/logout').then((res: any) => {
       if (res?.code === 0) {
         store.user.setUserInfo({});
+        push('/');
       }
     });
   };
 
-  const renderDropDownMenu = () => {
-    return (
-      <Menu>
-        <Menu.Item onClick={handleGotoPersonalPage}>
-          <HomeOutlined />
-          &nbsp; 个人主页
-        </Menu.Item>
-        <Menu.Item onClick={handleLogout}>
-          <LoginOutlined />
-          &nbsp; 退出系统
-        </Menu.Item>
-      </Menu>
-    );
-  };
+  const handleMenuClick = ({key}: { key: string}) => {
+    if (key === '1') {
+      handleGotoPersonalPage();
+    } else if (key === '2') {
+      handleLogout();
+    }
+  }
+
+  const menuProps = {
+    items: [
+      {
+        label: '个人主页',
+        key: '1',
+        icon: <HomeOutlined />,
+      },{
+        label: '退出系统',
+        key: '2',
+        icon: <LoginOutlined />,
+      }],
+      onClick: handleMenuClick
+    };
 
   return (
     <div className={styles.navbar}>
@@ -83,7 +91,7 @@ const Navbar: NextPage = () => {
         <Button onClick={handleGotoEditorPage}>写文章</Button>
         {userId ? (
           <>
-            <Dropdown overlay={renderDropDownMenu()} placement="bottomLeft">
+            <Dropdown menu={menuProps} placement="bottomLeft">
               <Avatar src={avatar} size={32} />
             </Dropdown>
           </>

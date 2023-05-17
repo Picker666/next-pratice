@@ -23,10 +23,10 @@ const UserHomePage = (props: IArticles) => {
   return (
     <div className="content-layout">
       {articles.map((article) => (
-        <>
+        <div key={article.id}>
           <ListItem article={article} />
           <Divider />
-        </>
+        </div>
       ))}
     </div>
   );
