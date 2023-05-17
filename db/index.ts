@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { Connection, getConnection, createConnection } from 'typeorm';
 
-import { User, UserAuth, Articles } from "./entity";
+import { User, UserAuth, Articles, Comments } from "./entity";
 
 let connectionReadyPromise: Promise<Connection> | null = null;
 
@@ -29,7 +29,7 @@ const prepareConnection = () => {
         username,
         password,
         database,
-        entities: [User, UserAuth, Articles],
+        entities: [User, UserAuth, Articles, Comments],
         synchronize: false,
         logging: true,
       });

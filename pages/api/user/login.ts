@@ -5,14 +5,12 @@ import { Cookie } from 'next-cookie';
 import { ironOptions } from 'config/index';
 import prepareConnection from 'db/index';
 import { User, UserAuth } from 'db/entity';
-import { ISession } from 'pages/api/index';
+import type { ISession, IUser } from 'pages/api/index';
 import { setCookie } from 'utils';
 
-interface userType { nickname: string,id:string,avatar: string };
-
 const updateCookie = async (
-  user: userType,
-  session: Partial<userType> & { save: () => void },
+  user: IUser,
+  session: Partial<IUser> & { save: () => void },
   cookies: any
 ) => {
   const { nickname, id, avatar } = user;

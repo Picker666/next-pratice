@@ -36,4 +36,8 @@ export const EXCEPTION_COMMENT = {
     code: 4001,
     msg: '发表失败',
   },
+  QUERY_EMPTY: {
+    code: 4002,
+    msg: '评论内容查找失败。。。'
+  }
 };

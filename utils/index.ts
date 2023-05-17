@@ -1,5 +1,5 @@
 interface ICookieInfo {
-  userId?: string;
+  userId?: number;
   nickname?: string;
   avatar?: string;
   expiresDate?: Date
@@ -7,7 +7,7 @@ interface ICookieInfo {
 
 export const setCookie = (
   cookies: any,
-  { userId = '', nickname = '', avatar = '', expiresDate }: ICookieInfo
+  { userId, nickname = '', avatar = '', expiresDate }: ICookieInfo
 ) => {
   const expires = expiresDate || new Date(Date.now() + 24 * 3600 * 1000);
   const path = '/';

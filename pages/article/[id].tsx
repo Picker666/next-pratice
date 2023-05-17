@@ -34,8 +34,11 @@ const ArticleDetail = (props: {article: IArticle}) => {
   const [inputVal, setInputVal] = useState('');
   // const [comments, setComments] = useState(comments || []);
 
-  const handleComment = () => {
-    
+  const handleComment = async () => {
+    const res = await request.post('/api/comment/add', {articleId, content: inputVal})
+    if (res.code === 0) {
+      message.info(res.msg || '成功。。。')
+    }
   }
 
 	return (
