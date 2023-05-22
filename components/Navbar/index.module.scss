@@ -4,12 +4,12 @@
   border-bottom: 1px solid #f1f1f1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   .logArea {
     font-size: 30px;
     font-weight: bolder;
-    margin-right: 60px;
+    margin-left: 48px;
   }
 
   .linkArea {
@@ -26,10 +26,13 @@
   }
 
   .operationArea {
-    margin-left: 150px;
+    margin-right: 48px;
     button {
-
       margin-right: 20px;
+    }
+
+    .hide {
+      display: none;
     }
   }
 }

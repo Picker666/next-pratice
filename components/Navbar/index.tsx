@@ -88,7 +88,7 @@ const Navbar: NextPage = () => {
         ))}
       </section>
       <section className={styles.operationArea}>
-        <Button onClick={handleGotoEditorPage}>写文章</Button>
+        <Button onClick={handleGotoEditorPage} className={`userId ? ${styles.hide}: ''`}>写文章</Button>
         {userId ? (
           <>
             <Dropdown menu={menuProps} placement="bottomLeft">

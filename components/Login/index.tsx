@@ -13,7 +13,7 @@ import styles from './index.module.scss';
 interface IProps {
   isShow: boolean;
   onClose: () => void;
-  cookie: any;
+  cookie?: any;
 }
 
 /**

@@ -1,0 +1,1 @@
+.layout{display:flex;flex-direction:column;height:100vh}.layout .content{margin:84px auto;flex:1}.layout .header{position:fixed;top:0;width:100%;z-index:9}.layout .footer{position:fixed;bottom:0;width:100%}
