@@ -6,7 +6,7 @@ import { encode } from 'js-base64';
 import request from 'service/fetch';
 import { ironOptions } from 'config/index';
 
-import { ISession } from 'pages/api/index';
+import { ISession } from 'type/index';
 
 async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   const { to = '', templateId = '1' } = req.body;

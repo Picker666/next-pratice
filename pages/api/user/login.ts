@@ -5,7 +5,7 @@ import { Cookie } from 'next-cookie';
 import { ironOptions } from 'config/index';
 import prepareConnection from 'db/index';
 import { User, UserAuth } from 'db/entity';
-import type { ISession, IUser } from 'pages/api/index';
+import type { ISession, IUser } from 'type/index';
 import { setCookie } from 'utils';
 
 const updateCookie = async (

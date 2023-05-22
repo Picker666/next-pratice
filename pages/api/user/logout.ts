@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import { ironOptions } from 'config/index';
 
-import { ISession } from 'pages/api/index';
+import { ISession } from 'type/index';
 
 import { Cookie } from 'next-cookie';
 import { setCookie } from 'utils';

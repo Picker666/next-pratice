@@ -3,11 +3,10 @@ import { withIronSessionApiRoute } from 'iron-session/next';
 
 import { User, Articles, Comments } from 'db/entity';
 import prepareConnection from 'db';
-import { ISession } from 'pages/api/index';
+import { ISession, IComment, IResponse  } from 'type/index';
 import { ironOptions } from 'config/index';
 
 import { EXCEPTION_ARTICLE, EXCEPTION_COMMENT } from '../config/codes';
-import type { IComment, IResponse } from 'pages/api';
 
 const add = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { articleId, content } = req.body;

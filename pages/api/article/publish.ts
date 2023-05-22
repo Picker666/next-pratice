@@ -5,7 +5,7 @@ import { Cookie } from 'next-cookie';
 import { ironOptions } from 'config/index';
 import prepareConnection from 'db/index';
 import { User, Articles } from 'db/entity';
-import { ISession } from 'pages/api/index';
+import { ISession } from 'type/index';
 import { setCookie } from 'utils';
 
 import {  EXCEPTION_ARTICLE } from '../config/codes';

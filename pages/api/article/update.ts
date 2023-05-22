@@ -4,7 +4,7 @@ import { withIronSessionApiRoute } from 'iron-session/next';
 import { ironOptions } from 'config/index';
 import prepareConnection from 'db/index';
 import { Articles } from 'db/entity';
-import { ISession } from 'pages/api/index';
+import { ISession } from 'type/index';
 
 import {  EXCEPTION_ARTICLE } from '../config/codes';
 

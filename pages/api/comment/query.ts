@@ -3,7 +3,7 @@ import { Articles, Comments } from 'db/entity';
 import prepareConnection from 'db';
 
 import { EXCEPTION_ARTICLE, EXCEPTION_COMMENT } from '../config/codes';
-import type { IComment, IResponse } from 'pages/api';
+import type { IComment, IResponse } from 'type/index';
 
 const query = async (req: NextApiRequest, res: NextApiResponse) => {
 	const { articleId } = req.body;

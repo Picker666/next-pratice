@@ -35,3 +35,12 @@ export type IResponse<T> = {
   msg: string,
   data?: T
 }
+
+export type ITag = {
+  id: number;
+  title: string;
+  icon: string;
+  follow_count: number;
+  article_count: number;
+  users: IUser[]
+}
