@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import prepareConnection from 'db/index';
 import { Articles } from "db/entity";
 import ListItem from 'components/ListItem';
-import type { IArticle } from 'pages/api';
+import type { IArticle } from 'type/index';
 import {Divider } from 'antd';
 
 interface IArticles {

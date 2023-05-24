@@ -24,7 +24,7 @@ const Tag = () => {
         setAllTags(allTags);
       }
     })
-  }, [needRefresh]);
+  }, [needRefresh, userId]);
 
   const handleUnFollow = (tagId: number) => {
     request.post('/api/tag/follow', {

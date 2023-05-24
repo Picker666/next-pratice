@@ -8,6 +8,9 @@ import { Tags } from 'db/entity';
 
 const get = async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.session;
+  if (id === undefined) {
+    res.status(200).json({code: 0, data: {followTags: [], allTags: []}});
+  }
   const db = await prepareConnection();
   const TagRepo = db.getRepository(Tags);
 
