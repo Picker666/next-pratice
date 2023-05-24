@@ -2,6 +2,13 @@
   display: flex;
   justify-content: flex-start;
 
+  :global {
+    .ant-tabs-tabpane-active {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
   .tagWrapper {
     width: 220px;
     height: 200px;

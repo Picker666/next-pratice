@@ -3,6 +3,11 @@
   justify-content: flex-start;
 }
 
+.tags :global .ant-tabs-tabpane-active {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .tags .tagWrapper {
   width: 220px;
   height: 200px;
