@@ -13,13 +13,13 @@ import { useStore } from 'store/index';
 import request from 'service/fetch';
 
 import styles from './index.module.scss';
-import { IArticle } from 'pages/api';
+import { IArticle } from 'type/index';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export async function getServerSideProps (context: {params: any}) {
 	const db = await prepareConnection();
-	const article = await db.getRepository(Articles).findOne({id: context.params.id},{relations: ['user']});
+	const article = await db.getRepository(Articles).findOne({id: context.params.id},{relations: ['user', 'tags']});
 	// const article = await db.getRepository(Articles).findOne({where: {id: context.params.id},relations: ['user']});
 	console.log('article: ', article);
 
@@ -33,11 +33,11 @@ const NewEditor = (props: {article: IArticle}) => {
   const { push, back } = useRouter();
   const { userId } = store.user.userInfo;
 
-  const { id, title: articleTitle, content: articleContent } = props.article;
+  const { id, title: articleTitle, content: articleContent, tags } = props.article;
 
   const [title, setTitle] = useState(articleTitle);
   const [content, setContent] = useState(articleContent);
-  const [tagIds, setTagIds] = useState([]);
+  const [tagIds, setTagIds] = useState(tags.map(tag => tag.id));
   const [allTags, setAllTags] = useState([]);
 
   useEffect(() => {
@@ -108,6 +108,7 @@ const NewEditor = (props: {article: IArticle}) => {
           allowClear
           placeholder="请选择标签"
           onChange={handleSelectTag}
+          value={tagIds}
         >
           {allTags?.map((tag: any) => (
             <Select.Option key={tag?.id} value={tag?.id}>

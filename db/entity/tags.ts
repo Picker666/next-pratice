@@ -18,6 +18,9 @@ export class Tags extends BaseEntity {
   @Column()
   follow_count!: number;
 
+  @Column()
+  article_count!: number;
+
   @ManyToMany(() => User, { cascade: true})
 
   @JoinTable({
@@ -31,8 +34,7 @@ export class Tags extends BaseEntity {
   })
 	users?: User[]
 
-	@ManyToMany(() => User, { cascade: true})
-
+	@ManyToMany(() => Articles, (article) => article.tags)
   @JoinTable({
     name: 'tags_article_rel',
     joinColumn: {
@@ -44,6 +46,6 @@ export class Tags extends BaseEntity {
   })
 	articles?: Articles[]
 
-  @OneToMany(() => Comments, (comment) => comment.article)
-  article!: Comments[]
+  // @OneToMany(() => Comments, (comment) => comment.article)
+  // article!: Comments[]
 }

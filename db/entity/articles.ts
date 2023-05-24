@@ -1,6 +1,7 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, ManyToMany } from 'typeorm';
 import { User } from './user';
 import { Comments } from './comments'
+import { Tags } from './tags';
 
 
 @Entity({ name: 'articles' })
@@ -34,4 +35,10 @@ export class Articles extends BaseEntity {
 
   @OneToMany(() => Comments, (comment) => comment.article)
   comments!: Comments[]
+
+  @ManyToMany(() => Tags, (tag) => tag.articles, {
+    cascade: true
+  })
+  tags!: Tags[]
+
 }
