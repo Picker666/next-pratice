@@ -94,7 +94,7 @@ const Tag = () => {
 
   return (
     <div className='content-layout'>
-      <Tabs items={items} />
+      <Tabs items={items} className={styles.tags} />
     </div>
   );
 };
