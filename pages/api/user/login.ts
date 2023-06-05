@@ -34,7 +34,7 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
   const responseData = {code: 0, msg: ''};
 
   if (String(session[phone]) === String(verifyCode)) {
-    let userAuth = await userAuthRepo.findOne(
+    const userAuth = await userAuthRepo.findOne(
       { identifier: phone, identity_type },
       { relations: ['user'] }
     );

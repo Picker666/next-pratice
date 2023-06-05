@@ -106,4 +106,4 @@ const Navbar: NextPage = () => {
   );
 };
 
-export default observer(Navbar);;
+export default observer(Navbar)

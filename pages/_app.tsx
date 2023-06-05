@@ -6,7 +6,7 @@ import '../styles/globals.css';
 
 interface IProps extends AppProps {
   initialValue: Record<string, any>;
-};
+}
 
 function MyApp({ initialValue, Component, pageProps }: IProps) {
   const renderComponent = (
@@ -29,7 +29,7 @@ function MyApp({ initialValue, Component, pageProps }: IProps) {
   );
 }
 
-MyApp.getInitialProps = async ({ ctx }: any) => {
+export async function getServerSideProps ({ ctx }: any) {
   const { userId, nickname, avatar } = ctx?.req?.cookies||{};
 
   return {

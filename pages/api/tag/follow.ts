@@ -7,7 +7,7 @@ import prepareConnection from 'db/index';
 import { Tags, User } from 'db/entity';
 
 const follow = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.session;
+  const { id } = req.session as any;
 	const { type, tagId } = req.body;
   const db = await prepareConnection();
   const tagRepo = db.getRepository(Tags);
@@ -27,7 +27,7 @@ const follow = async (req: NextApiRequest, res: NextApiResponse) => {
 			res.status(200).json({ ...responseData, code: 1, msg: '已关注'});
 			
 			return;
-		} else if (type === 'follow') {
+		} else if (type === 'follow' && user) {
 			tag.users = tag.users.concat([user]);
 		}
 

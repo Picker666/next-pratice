@@ -7,7 +7,7 @@ import { useStore } from 'store/index';
 import request from 'service/fetch';
 import styles from './index.module.scss';
 
-import type { ITag } from '../../type/index.d.ts';
+import type { ITag } from 'type/index';
 
 const Tag = () => {
   const store = useStore();

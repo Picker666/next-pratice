@@ -1,4 +1,4 @@
-import type { NextPage } from 'Next';
+import type { NextPage } from 'next';
 import { useEffect } from 'react';
 import { Modal, Form, Input, Button, Row, Col, Checkbox, message } from 'antd';
 import { useCookie, withCookie } from 'next-cookie';
@@ -27,12 +27,14 @@ const Login = withCookie((props: Pick<IProps, 'onClose' | 'cookie'>) => {
 
   const [form] = Form.useForm();
 
-  const handleGithubLogin = () => {};
+  const handleGithubLogin = () => {
+    console.log("===============");
+  };
 
   useEffect(() => {
     form.setFieldsValue({
       phone: '17621059030',
-      agreement: true,
+      agreement: true
     });
   }, []);
 
@@ -40,7 +42,7 @@ const Login = withCookie((props: Pick<IProps, 'onClose' | 'cookie'>) => {
     const { phone, verifyCode } = values;
     request
       .post('/api/user/login', { phone, verifyCode, identity_type: 'phone' })
-      .then((response) => {
+      .then((response: any) => {
         if (response?.code === 0) {
           store.user.setUserInfo({
             userId: cookie.get('userId'),
@@ -157,7 +159,7 @@ const Login = withCookie((props: Pick<IProps, 'onClose' | 'cookie'>) => {
 //   };
 // };
 
-export default (props: IProps)=>{
+const LoginWrapper = (props: IProps)=>{
   const { isShow, onClose } = props;
 
   if (isShow) {
@@ -166,3 +168,5 @@ export default (props: IProps)=>{
   return null;
 
 };
+
+export default LoginWrapper;

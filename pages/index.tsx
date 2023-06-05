@@ -6,23 +6,24 @@ import type { IArticle } from 'type/index';
 import {Divider } from 'antd';
 
 interface IArticles {
-  articles: IArticle[];
+  articles: string; // IArticle[];
 }
-export async function getServerSideProps () {
+export async function getStaticProps () {
   const db = await prepareConnection();
   const articles = await db.getRepository(Articles).find({relations: ['user', 'tags']});
 
   return {
-    props: {articles: JSON.parse(JSON.stringify(articles.reverse()))}
+    props: {articles: JSON.stringify(articles.reverse())},
+    revalidate: 10
   }
 }
 
-const UserHomePage = (props: IArticles) => {
-  const {articles} = props;
+const UserHomePage = function (props: IArticles) {
+  const {articles=''} = props;
 
   return (
     <div className="content-layout">
-      {articles.map((article) => (
+      {JSON.parse(articles)?.map((article: IArticle) => (
         <div key={article.id}>
           <ListItem article={article} />
           <Divider />

@@ -7,7 +7,7 @@ import { ISession } from 'type/index';
 import { Cookie } from 'next-cookie';
 import { setCookie } from 'utils';
 
-async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
+async function logout(req: NextApiRequest, res: NextApiResponse) {
   const session: ISession = req.session;
   const cookies = Cookie.fromApiRoute(req,res);
 
@@ -20,4 +20,4 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
   });
 }
 
-export default withIronSessionApiRoute(sendVerifyCode, ironOptions);
+export default withIronSessionApiRoute(logout, ironOptions);

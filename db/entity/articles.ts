@@ -7,7 +7,7 @@ import { Tags } from './tags';
 @Entity({ name: 'articles' })
 export class Articles extends BaseEntity {
   @PrimaryGeneratedColumn()
-  readonly id!: string;
+  readonly id!: number;
 
   @Column()
   content!: string;

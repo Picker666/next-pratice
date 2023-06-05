@@ -25,8 +25,8 @@ const add = async (req: NextApiRequest, res: NextApiResponse) => {
 		newComment.content = content;
 		newComment.create_time = new Date();
 		newComment.update_time = new Date();
-		newComment.article = article;
-		newComment.user = user;
+		newComment.article = [article];
+		newComment.user = [user];
 		console.log('newComment: ', newComment);
 
 		const response = await commentsRepo.save(newComment);
@@ -41,4 +41,4 @@ const add = async (req: NextApiRequest, res: NextApiResponse) => {
 	res.status(200).send(responseData);
 }
 
-export default withIronSessionApiRoute(add, ironOptions);;
+export default withIronSessionApiRoute(add, ironOptions)

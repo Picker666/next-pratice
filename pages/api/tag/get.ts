@@ -7,7 +7,7 @@ import prepareConnection from 'db/index';
 import { Tags } from 'db/entity';
 
 const get = async (req: NextApiRequest, res: NextApiResponse) => {
-  const { id } = req.session;
+  const { id } = req.session as any;
   if (id === undefined) {
     res.status(200).json({code: 0, data: {followTags: [], allTags: []}});
   }

@@ -4,7 +4,7 @@ import { Avatar } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
 import { markdownToTxt } from 'markdown-to-txt';
 
-import  type { IArticle } from 'pages/api';
+import  type { IArticle } from 'type/index';
 
 import styles from './index.module.scss';
 const ListItem = (props: {article: IArticle}) => {
@@ -32,4 +32,4 @@ const ListItem = (props: {article: IArticle}) => {
   );
 }
 
-export default ListItem;;
+export default ListItem

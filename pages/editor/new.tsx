@@ -107,6 +107,9 @@ const NewEditor = () => {
   );
 }
 
-NewEditor.layout = null;
+(NewEditor as {
+  (): JSX.Element;
+  layout: any;
+}).layout = null;
 
 export default observer(NewEditor);

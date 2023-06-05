@@ -7,7 +7,7 @@ import MarkDown from 'markdown-to-jsx';
 import { format } from 'date-fns';
 import prepareConnection from 'db/index';
 import { Articles, Comments } from 'db/entity';
-import { IArticle, IComment } from 'pages/api';
+import { IArticle, IComment } from 'type/index';
 import request from 'service/fetch';
 
 import styles from './index.module.scss';
@@ -29,21 +29,21 @@ export async function getServerSideProps (context: {params: any}) {
 }
 
 const ArticleDetail = (props: {article: IArticle}) => {
-  const { id: articleId, title, content, update_time, views, user: { id, nickname, avatar }, comments: originalComments } = props.article;
+  const { id: articleId, title, content, update_time, views, user: { id, nickname, avatar }={}, comments: originalComments } = props.article;
   const store = useStore();
   const loginUserInfo = store?.user?.userInfo;
   const [inputVal, setInputVal] = useState('');
   const [comments, setComments] = useState(originalComments || []);
 
   const updateComments = async () => {
-    const res = await request.post('/api/comment/query', {articleId});
+    const res: any = await request.post('/api/comment/query', {articleId});
     if (res.code === 0) {
       setComments(res.data);
     }
   }
 
   const handleComment = async () => {
-    const res = await request.post('/api/comment/add', {articleId, content: inputVal})
+    const res: any = await request.post('/api/comment/add', {articleId, content: inputVal})
     if (res.code === 0) {
       message.info(res.msg || '成功。。。');
       setInputVal('');

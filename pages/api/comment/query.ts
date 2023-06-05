@@ -15,8 +15,8 @@ const query = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (article) {
 		console.log('article: ', article);
 		const commentsRepo = db.getRepository(Comments);
-		const comments = await commentsRepo.find({where: { ['article_id']: articleId }, relations: ['user']});
-		console.log('comments: ', comments);
+		const comments: any = await commentsRepo.find({where: { ['article_id']: articleId }, relations: ['user']});
+
 		if (comments) {
 			responseData.data = comments;
 		} else {

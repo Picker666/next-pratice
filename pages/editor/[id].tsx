@@ -108,7 +108,7 @@ const NewEditor = (props: {article: IArticle}) => {
           allowClear
           placeholder="请选择标签"
           onChange={handleSelectTag}
-          value={tagIds}
+          value={tagIds as any}
         >
           {allTags?.map((tag: any) => (
             <Select.Option key={tag?.id} value={tag?.id}>
@@ -128,6 +128,11 @@ const NewEditor = (props: {article: IArticle}) => {
   );
 }
 
-NewEditor.layout = null;
+(NewEditor as {
+  (props: {
+      article: IArticle;
+  }): JSX.Element;
+  layout: any;
+}).layout = null;
 
 export default observer(NewEditor);

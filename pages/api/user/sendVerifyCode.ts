@@ -40,10 +40,10 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
         },
       }
       );
-  
+
     console.log('response: ', response);
-    const { statusCode, statusMsg, templateSMS } = response as unknown as {statusCode: string, statusMsg: string; templateSMS: {}};
-  
+    const { statusCode, statusMsg, templateSMS } = response as unknown as { statusCode: string, statusMsg: string; templateSMS: Record<string, any>};
+
     if (statusCode === '000000') {
       session[to] = verifyCode;
       await session.save();
@@ -63,7 +63,7 @@ async function sendVerifyCode(req: NextApiRequest, res: NextApiResponse) {
     res.status(200).json({
       code: -1,
       msg: '网络异常。。。',
-    });;
+    })
   }
 }
 

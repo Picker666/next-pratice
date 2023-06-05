@@ -7,7 +7,7 @@ import { Comments } from './comments'
 @Entity({ name: 'tags' })
 export class Tags extends BaseEntity {
   @PrimaryGeneratedColumn()
-  readonly id!: string;
+  readonly id!: number;
 
   @Column()
   title!: string;
@@ -21,18 +21,18 @@ export class Tags extends BaseEntity {
   @Column()
   article_count!: number;
 
-  @ManyToMany(() => User, { cascade: true})
+  @ManyToMany(() => User, { cascade: true })
 
   @JoinTable({
     name: 'tags_users_rel',
     joinColumn: {
-			name: 'tag_id'
+      name: 'tag_id'
     },
-		inverseJoinColumn: {
-			name: 'user_id'
-		}
+    inverseJoinColumn: {
+      name: 'user_id'
+    }
   })
-	users?: User[]
+  users?: User[];
 
 	@ManyToMany(() => Articles, (article) => article.tags)
   @JoinTable({
